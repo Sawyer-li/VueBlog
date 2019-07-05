@@ -4,7 +4,7 @@ import Register from '@/container/Register'
 import Login from '@/container/Login'
 import Edit from '@/container/Edit'
 import List from  '@/container/List'
-import Blog from '@/container/BlogDetail'
+import Blog from '@/container/BlogDetail/'
 import Setting from '@/container/Setting'
 Vue.use(Router)
 const router = new Router({
