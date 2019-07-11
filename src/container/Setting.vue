@@ -76,7 +76,7 @@ export default {
       formData.append("avatar", file);
       post("/api/user/avatar", formData).then(res => {
         this.$message.success(res.msg);
-        this.user.head_url = "http://192.168.1.153:3000"+ res.path;
+        this.user.head_url = res.path;
         localStorage.setItem('user',JSON.stringify(this.user));
       })
       .catch((e) => {

@@ -67,7 +67,7 @@ export default {
       this.dochtml = dochtml;
       this.create_time = create_time;
       this.author = author;
-      this.headUrl = "http://192.168.1.153:3000" + head_url;
+      this.headUrl = head_url;
     });
   }
 };

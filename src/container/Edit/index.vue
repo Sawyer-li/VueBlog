@@ -2,7 +2,17 @@
   <div id="edit">
     <Header></Header>
     <div class="editBox">
-      <a-input v-model="docTitle" placeholder="请输入标题"/>
+      <div class="titleBox clear">
+        <a-input class="fl title" v-model="docTitle" placeholder="请输入标题" />
+        <a-button-group class="typeBox fl">
+          <a-button
+            v-for="item,key in typeList"
+            :key="key"
+            :type="item ? 'primary':'default'"
+            @click="selectType(key)"
+          >{{key}}</a-button>
+        </a-button-group>
+      </div>
       <VmMarkdown
         theme="dark"
         class="textBody"
@@ -23,8 +33,19 @@
   margin: 0 auto;
   margin-top: 20px;
 }
+.titleBox{
+  margin-top: 10px;
+}
+.titleBox .title{
+  width: 82%;
+}
+.titleBox .typeBox {
+  margin-left: 1%;
+  width: 17%;
+}
+
 .textBody {
-  margin-top: 20px;
+  margin-top: 10px;
   width: 1080px;
   height: 500px;
 }
@@ -33,10 +54,12 @@
   margin-top: 20px;
   margin-right: 50px;
 }
+.typeBtn {
+}
 </style>
 <script>
-import { get, post } from "../utils/ajax";
-import Header from "../components/Header";
+import { get, post } from "../../utils/ajax";
+import Header from "../../components/Header";
 import VmMarkdown from "vm-markdown";
 export default {
   name: "Edit",
@@ -47,7 +70,12 @@ export default {
   data() {
     return {
       intro: "",
-      docTitle: ""
+      docTitle: "",
+      typeList: {
+        vue: false,
+        node: false,
+        linux: false
+      }
     };
   },
   mounted() {
@@ -75,6 +103,9 @@ export default {
           this.$router.push({ path: "/blog/" + id });
         }, 500);
       });
+    },
+    selectType(key) {
+      this.typeList[key] = !this.typeList[key];
     }
   }
 };

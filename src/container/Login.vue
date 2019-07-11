@@ -93,7 +93,6 @@ export default {
             _this.alert.type = "success";
             _this.alert.msg = msg;
             _this.alert.is = true;
-            user.head_url = "http://192.168.1.153:3000"+user.head_url;
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem("username", values.userName);
