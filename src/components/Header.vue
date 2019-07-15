@@ -2,9 +2,13 @@
   <div class="head">
     <div class="headBox">
       <router-link to="/list"><h1 class="fl">BLOG</h1></router-link>
+      <nav class="fl clear">
+        <a href="/home">Home</a>
+        <a href="/about">About</a>
+      </nav>
       <div class="user fr" v-if="!user">
-        <router-link to="/login">登入</router-link>
-        <router-link to="/register">注册</router-link>
+        <router-link to="/user/signin">登入</router-link>
+        <router-link to="/user/signup">注册</router-link>
       </div>
       <div class="user fr clear" v-if="user">
         <router-link to="/edit">
@@ -19,8 +23,6 @@
     </div>
   </div>
 </template>
-
-
 <script>
 export default {
   data() {

@@ -28,4 +28,16 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 博客
 博客+论坛
 板块
-问答
+个人主页
+medium 拍手
+关于作者
+树状评论
+
+哪些个人信息
+  头像
+  自我介绍
+  擅长领域
+  github地址
+  个人简介
+  手机号
+  邮箱
