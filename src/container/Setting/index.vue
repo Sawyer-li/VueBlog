@@ -4,28 +4,68 @@
     <div class="setBody clear">
       <div class="headImgBox fl">
         <img class="headImg" :src="this.user.head_url" />
-        <div class="headMask">
-        </div>
+        <div class="headMask"></div>
         <a-icon class="icon" type="camera" />
         <input class="fileInput" name="img" type="file" id="img-input" @change="changeImg" />
       </div>
       <div class="fr">
+        <InputConfirm label="姓名" text="这里是传进来的内容"></InputConfirm>
         <div class="inpuxBox">
-          <h3>一句话</h3>
+          <h3>性别</h3>
           <a-input placeholder="Basic usage" />
         </div>
         <div class="inpuxBox">
-          <h3>两句话</h3>
+          <h3>一句话介绍自己</h3>
           <a-input placeholder="Basic usage" />
         </div>
         <div class="inpuxBox">
-          <h3>三句话</h3>
+          <h3>个人简介</h3>
           <a-input placeholder="Basic usage" />
         </div>
       </div>
     </div>
   </div>
 </template>
+<script>
+import { post } from "../../utils/ajax";
+import Header from "../../components/Header";
+import InputConfirm from "./InputConfirm";
+export default {
+  data() {
+    return {
+      user: ""
+    };
+  },
+  components: { Header,InputConfirm },
+  mounted() {
+    this.user = JSON.parse(localStorage.getItem("user"));
+  },
+  methods: {
+    changeImg(e) {
+      const file = e.target.files[0];
+      var imageType = /^image\//;
+      //是否是图片
+      if (!imageType.test(file.type)) {
+        alert("请选择图片！");
+        return;
+      }
+      var formData = new window.FormData();
+      formData.append("avatar", file);
+      post("/api/user/avatar", formData)
+        .then(res => {
+          this.$message.success(res.msg);
+          this.user.head_url = res.path;
+          console.log(this.user.head_url);
+          localStorage.setItem("user", JSON.stringify(this.user));
+        })
+        .catch(e => {
+          console.log(e);
+          this.$message.error(e);
+        });
+    }
+  }
+};
+</script>
 <style scoped>
 .setBody {
   width: 1000px;
@@ -60,52 +100,11 @@
   background: #000;
   opacity: 0.5;
 }
-.headImgBox .icon{
+.headImgBox .icon {
   position: absolute;
   left: 50px;
   top: 50px;
   font-size: 50px;
   color: #fff;
 }
-</style>
-<script>
-import { post } from "../utils/ajax";
-import Header from "../components/Header";
-export default {
-  data() {
-    return {
-      user: ""
-    };
-  },
-  components: { Header },
-  mounted() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-  },
-  methods: {
-    changeImg(e) {
-      const file = e.target.files[0];
-      var imageType = /^image\//;
-      //是否是图片
-      if (!imageType.test(file.type)) {
-        alert("请选择图片！");
-        return;
-      }
-      var formData = new window.FormData();
-      formData.append("avatar", file);
-      post("/api/user/avatar", formData)
-        .then(res => {
-          this.$message.success(res.msg);
-          this.user.head_url = res.path;
-          console.log(this.user.head_url);
-          localStorage.setItem("user", JSON.stringify(this.user));
-        })
-        .catch(e => {
-          console.log(e);
-          this.$message.error(e);
-        });
-    }
-  }
-};
-</script>
-<style scoped>
 </style>
