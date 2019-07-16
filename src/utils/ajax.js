@@ -33,7 +33,7 @@ axios.interceptors.response.use(
         // 在登录成功后返回当前页面，这一步需要在登录页操作。
         case 401:
           router.replace({
-            path: "/login",
+            path: "/user/signin",
             query: {
               redirect: router.currentRoute.fullPath
             }

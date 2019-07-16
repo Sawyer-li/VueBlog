@@ -41,3 +41,5 @@ medium 拍手
   个人简介
   手机号
   邮箱
+
+  introduction

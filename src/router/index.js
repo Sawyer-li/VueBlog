@@ -8,6 +8,7 @@ import List from "@/container/List";
 import Blog from "@/container/BlogDetail/";
 import Setting from "@/container/Setting";
 import About from "@/container/About";
+import _404 from "@/container/404";
 
 Vue.use(Router);
 const router = new Router({
@@ -56,6 +57,11 @@ const router = new Router({
       path: "/about",
       name: "about",
       component: About
+    },
+    {
+      // 会匹配所有路径
+      path: "*",
+      component: _404
     }
   ]
 });

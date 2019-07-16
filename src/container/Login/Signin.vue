@@ -8,7 +8,7 @@
           :help="userNameError() || ''"
         >
           <a-input
-            placeholder="名称"
+            placeholder="名称或邮箱"
             v-decorator="[
           'userName',
           {rules: [{ required: true, message: 'Please input your username!' }]}
@@ -93,7 +93,7 @@ export default {
         }
         _this.$ajax
           .post("/api/user/login", {
-            name: values.userName,
+            account: values.userName,
             password: password
           })
           .then(res => {
