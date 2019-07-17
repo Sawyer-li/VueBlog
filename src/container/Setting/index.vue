@@ -8,9 +8,16 @@
         <a-icon class="icon" type="camera" />
         <input class="fileInput" name="img" type="file" id="img-input" @change="changeImg" />
       </div>
-      <div class="fr">
-        <InputConfirm label="姓名" text="这里是传进来的内容"></InputConfirm>
-        <div class="inpuxBox">
+      <div class="fl messBox" v-if="msgBox.isFetching">
+        <InputConfirm
+          v-for="(item,index) in msgBox.order"
+          :key="item"
+          :type="item"
+          :label="msgBox.labels[index]"
+          :text="msgBox.data[item]"
+          @confirm="setSingleMess"
+        ></InputConfirm>
+        <!-- <div class="inpuxBox">
           <h3>性别</h3>
           <a-input placeholder="Basic usage" />
         </div>
@@ -21,26 +28,51 @@
         <div class="inpuxBox">
           <h3>个人简介</h3>
           <a-input placeholder="Basic usage" />
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
 </template>
 <script>
-import { post } from "../../utils/ajax";
+import { post, get } from "../../utils/ajax";
 import Header from "../../components/Header";
 import InputConfirm from "./InputConfirm";
 export default {
   data() {
     return {
-      user: ""
+      user: "",
+      name: "sawyer",
+      shortIntro: "一直特立独行的猪",
+      Intro: "一个特立独行有思想的猪",
+      msgBox: {
+        isFetching: false,
+        order: [
+          "username",
+          "shortIntroduction",
+          "mobile",
+          "email",
+          "introduction"
+        ],
+        labels: ["姓名:", "一句话介绍:", "手机号:", "邮箱:", "个人介绍:"],
+        data: ""
+      }
     };
   },
-  components: { Header,InputConfirm },
-  mounted() {
+  components: { Header, InputConfirm },
+  created() {
+    const { msgBox } = this;
     this.user = JSON.parse(localStorage.getItem("user"));
+    get("/api/user/me").then(res => {
+      msgBox.isFetching = true;
+      msgBox.data = res;
+      console.log(res);
+    });
   },
+  mounted() {},
   methods: {
+    setSingleMess(type,text) {
+      this.msgBox.data[type] = text;
+    },
     changeImg(e) {
       const file = e.target.files[0];
       var imageType = /^image\//;
@@ -106,5 +138,9 @@ export default {
   top: 50px;
   font-size: 50px;
   color: #fff;
+}
+.messBox {
+  width: 700px;
+  margin-left: 50px;
 }
 </style>
