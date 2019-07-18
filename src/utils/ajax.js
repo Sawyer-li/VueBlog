@@ -3,7 +3,10 @@ import router from "../router";
 axios.defaults.timeout = 10000;
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded;charset=UTF-8";
-
+const serverUrl =
+  process.env.NODE_ENV === "development"
+    ? "/api"
+    : "http://47.102.204.246:3000";
 // 添加请求拦截器
 axios.interceptors.request.use(
   function(config) {
@@ -17,6 +20,7 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 // 添加响应拦截器
 axios.interceptors.response.use(
   function(response) {
@@ -47,6 +51,7 @@ axios.interceptors.response.use(
 
 export function get(url, params) {
   return new Promise((resolve, reject) => {
+    url = serverUrl + url;
     axios
       .get(url, {
         params: params
@@ -61,6 +66,7 @@ export function get(url, params) {
 }
 export function post(url, params) {
   return new Promise((resolve, reject) => {
+    url = serverUrl + url;
     axios
       .post(url, params)
       .then(res => {
