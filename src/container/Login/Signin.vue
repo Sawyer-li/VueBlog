@@ -86,7 +86,7 @@ export default {
         if (err) {
           return;
         }
-        post("/api/user/login", {
+        post("/user/login", {
           account: values.userName,
           password: password
         })
