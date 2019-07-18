@@ -15,7 +15,9 @@
             }]
           }
         ]"
-        ><a-icon slot="prefix" type="mail" style="color:rgba(0,0,0,.25)"/></a-input>
+        >
+          <a-icon slot="prefix" type="mail" style="color:rgba(0,0,0,.25)" />
+        </a-input>
       </a-form-item>
       <a-form-item>
         <a-input
@@ -90,6 +92,7 @@
 </style>
 <script>
 import md5 from "js-md5";
+import { get, post } from "../../utils/ajax";
 export default {
   name: "register",
   data() {
@@ -129,12 +132,11 @@ export default {
       _this.form.validateFields((err, values) => {
         const { email, nickname, password, confirm } = values;
         const md5password = md5(password);
-        _this.$ajax
-          .post("/api/user/register", {
-            name: nickname,
-            password: md5password,
-            email: email
-          })
+        post("/user/register", {
+          name: nickname,
+          password: md5password,
+          email: email
+        })
           .then(res => {
             this.$message.success("register success");
             setTimeout(() => {

@@ -48,7 +48,7 @@ export default {
     };
   },
   mounted() {
-    get("/api/blog/getAllTitle").then(res => {
+    get("/blog/getAllTitle").then(res => {
       this.titleList = res;
       this.titleList.forEach(item => {
         item.to = "/blog/" + item.id;

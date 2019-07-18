@@ -18,18 +18,6 @@
           :text="msgBox.data[item.type]"
           @confirm="setSingleMess"
         ></InputConfirm>
-        <!-- <div class="inpuxBox">
-          <h3>性别</h3>
-          <a-input placeholder="Basic usage" />
-        </div>
-        <div class="inpuxBox">
-          <h3>一句话介绍自己</h3>
-          <a-input placeholder="Basic usage" />
-        </div>
-        <div class="inpuxBox">
-          <h3>个人简介</h3>
-          <a-input placeholder="Basic usage" />
-        </div>-->
       </div>
     </div>
   </div>
@@ -75,7 +63,7 @@ export default {
   created() {
     const { msgBox } = this;
     this.user = JSON.parse(localStorage.getItem("user"));
-    get("/api/user/me").then(res => {
+    get("/user/me").then(res => {
       msgBox.isFetching = true;
       msgBox.data = res;
     });
@@ -84,7 +72,7 @@ export default {
   methods: {
     setSingleMess(type,text) {
       console.log(type,text);
-      post('/api/user/set',{
+      post('/user/set',{
         text,
         type
       }).then((res)=>{
@@ -102,7 +90,7 @@ export default {
       }
       var formData = new window.FormData();
       formData.append("avatar", file);
-      post("/api/user/avatar", formData)
+      post("/user/avatar", formData)
         .then(res => {
           this.$message.success(res.msg);
           this.user.head_url = res.path;

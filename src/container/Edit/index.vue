@@ -92,7 +92,7 @@ export default {
       var _this = this;
       let html = document.querySelector(".vm-markdown-html").innerHTML;
       const username = localStorage.getItem("userName");
-      post("/api/blog/senddoc", {
+      post("/blog/senddoc", {
         title: _this.docTitle,
         author: username,
         dochtml: html

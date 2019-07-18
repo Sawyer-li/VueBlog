@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     handleSubmitComment() {
-      post("/api/comment/addComment", {
+      post("/comment/addComment", {
         blogId: this.blogId,
         content: this.commentContent
       }).then((res)=>{
@@ -61,7 +61,7 @@ export default {
     }
   },
   mounted() {
-    get("/api/blog/getBlogDetail/" + this.blogId).then(res => {
+    get("/blog/getBlogDetail/" + this.blogId).then(res => {
       const { title, dochtml, create_time, author, head_url } = res;
       this.title = title;
       this.dochtml = dochtml;

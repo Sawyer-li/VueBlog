@@ -40,7 +40,7 @@ export default {
     init() {
       const { blogId } = this;
       const testData = "1231231";
-      get("/api/comment/" + blogId).then(res => {
+      get("/comment/" + blogId).then(res => {
         this.comments = res;
         console.log(this.comments);
       });
