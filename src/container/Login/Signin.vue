@@ -91,7 +91,7 @@ export default {
           password: password
         })
           .then(res => {
-            const { token, msg, user } = res.data;
+            const { token, msg, user } = res;
             _this.alert.type = "success";
             _this.alert.msg = msg;
             _this.alert.is = true;
