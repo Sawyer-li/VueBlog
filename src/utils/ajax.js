@@ -6,7 +6,7 @@ axios.defaults.headers.post["Content-Type"] =
 const serverUrl =
   process.env.NODE_ENV === "development"
     ? "/api"
-    : "http://47.102.204.246:3000";
+    : "http://47.102.204.246:3000/api";
 // 添加请求拦截器
 axios.interceptors.request.use(
   function(config) {
