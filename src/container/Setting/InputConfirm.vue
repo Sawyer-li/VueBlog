@@ -4,13 +4,13 @@
     <div class="content fl">
       <div class="show clear" v-if="isShow">
         <div class="text fl">{{text}}</div>
-        <a class="editBtn fl" @click="isShow=!isShow">编辑</a>
+        <a class="editBtn fl" @click="isShow=!isShow" v-if="isedit">编辑</a>
       </div>
-      <div class="edit" v-if="!isShow">
-        <input class="fl" type="text" v-model="value" />
-        <div class="buttonGroup fl">
-          <button class="confirm" @click="confirm">确认</button>
-          <button class="cancel" @click="isShow=!isShow">取消</button>
+      <div class="editBox" v-if="!isShow">
+        <input class="textInput" type="text" v-model="value" />
+        <div class="buttonGroup">
+          <a-button type="primary" class="confirm" @click="confirm">确认</a-button>
+          <a-button class="cancel" @click="isShow=!isShow">取消</a-button>
         </div>
       </div>
     </div>
@@ -19,15 +19,19 @@
 
 <script>
 export default {
-  props: ["label", "text", "type"],
+  props: ["label", "text", "type", "isEdit"],
   data() {
     return {
       isShow: true,
-      value: ""
+      value: "",
+      isedit: true
     };
   },
   created() {
     this.value = this.text;
+    if (this.isEdit != undefined) {
+      this.isedit = false;
+    }
   },
   methods: {
     confirm() {
@@ -54,6 +58,7 @@ export default {
   color: #444;
 }
 .content {
+  width: 100%;
   padding: 0 64px 0 140px;
   line-height: 36px;
 }
@@ -61,7 +66,20 @@ export default {
   font-size: 15px;
   color: #1a1a1a;
 }
-.content .editBtn{
-
+.content .editBtn {
+  margin-left: 10px;
+}
+.textInput {
+  border: none;
+  border-bottom: 1px solid gray;
+}
+.editBox {
+  width: 100%;
+}
+.editBox .textInput {
+  width: 80%;
+}
+.buttonGroup {
+  margin-top: 5px;
 }
 </style>

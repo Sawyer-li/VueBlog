@@ -11,10 +11,11 @@
       <div class="fl messBox" v-if="msgBox.isFetching">
         <InputConfirm
           v-for="(item,index) in msgBox.order"
-          :key="item"
-          :type="item"
-          :label="msgBox.labels[index]"
-          :text="msgBox.data[item]"
+          :key="item.type"
+          :type="item.type"
+          :label="item.label"
+          :isEdit="item.isEdit"
+          :text="msgBox.data[item.type]"
           @confirm="setSingleMess"
         ></InputConfirm>
         <!-- <div class="inpuxBox">
@@ -47,13 +48,25 @@ export default {
       msgBox: {
         isFetching: false,
         order: [
-          "username",
-          "shortIntroduction",
-          "mobile",
-          "email",
-          "introduction"
+          {
+            label: "姓名:",
+            type: "username",
+          },
+          {
+            label: "一句话介绍:",
+            type: "shortIntroduction",
+          },{
+            label: "手机号:",
+            type: "mobile",
+          },{
+            label: "邮箱:",
+            type: "email",
+            isEdit: false
+          },{
+            label: "个人介绍:",
+            type: "introduction",
+          }
         ],
-        labels: ["姓名:", "一句话介绍:", "手机号:", "邮箱:", "个人介绍:"],
         data: ""
       }
     };
@@ -65,13 +78,19 @@ export default {
     get("/api/user/me").then(res => {
       msgBox.isFetching = true;
       msgBox.data = res;
-      console.log(res);
     });
   },
   mounted() {},
   methods: {
     setSingleMess(type,text) {
-      this.msgBox.data[type] = text;
+      console.log(type,text);
+      post('/api/user/set',{
+        text,
+        type
+      }).then((res)=>{
+        console.log(res);
+        this.msgBox.data[type] = text;
+      })
     },
     changeImg(e) {
       const file = e.target.files[0];
